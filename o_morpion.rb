@@ -12,7 +12,6 @@ class Board
     @case_7 = BoardCase.new
     @case_8 = BoardCase.new
     @case_9 = BoardCase.new
-
     @case_array = [0, @case_1, @case_2, @case_3, @case_4, @case_5, @case_6, @case_7, @case_8, @case_9]
   end
 
@@ -21,19 +20,19 @@ class Board
   end
 
   def print_board
-    print "#{@case_1.case_value}    #{@case_2.case_value}    #{@case_3.case_value}"
-    puts "     1 - 2 - 3 \n".green
-    print "#{@case_4.case_value}    #{@case_5.case_value}    #{@case_6.case_value}"
-    puts "     4 - 5 - 6 \n".green
-    print "#{@case_7.case_value}    #{@case_8.case_value}    #{@case_9.case_value}"
-    puts "     7 - 8 - 9".green
+    print " #{@case_1.case_value} #{"|".green} #{@case_2.case_value} #{"|".green} #{@case_3.case_value}"
+    puts "        1 | 2 | 3 \n---+---+---      ---+---+---".green
+    print " #{@case_4.case_value} #{"|".green} #{@case_5.case_value} #{"|".green} #{@case_6.case_value}"
+    puts "        4 | 5 | 6 \n---+---+---      ---+---+---".green
+    print " #{@case_7.case_value} #{"|".green} #{@case_8.case_value} #{"|".green} #{@case_9.case_value}"
+    puts "        7 | 8 | 9".green
   end
 end
 
 class BoardCase
   attr_accessor :value
   def initialize
-    @value = ".".blue
+    @value = " "
   end
   def case_value
     return @value
@@ -59,9 +58,8 @@ end
 
 class Game
   def initialize
-#presentation du jeu et config des players
-    puts "Bienvenue dans le jeu du morpion\n\n" .green
-    print "Player_1, entrez votre prénom > " .cyan
+    puts "Bienvenue dans le jeu du morpion" .green
+    print "\nPlayer_1, entrez votre prénom > " .cyan
     player_1 = gets.chomp.cyan
     @player_1 = Player.new(player_1, "O".cyan)
     print "Player_2, entrez votre prénom > " .yellow
@@ -101,7 +99,7 @@ class Game
   end
 
   def conditions(stock, input, player)
-    if (input > 0 && input < 10) && stock[input].case_value == "." .blue
+    if (input > 0 && input < 10) && stock[input].case_value == " "
       stock[input].change_value(player.player_symb)
       puts ""
       @board.print_board
@@ -123,9 +121,9 @@ class Game
       ((stock[3].case_value == player.player_symb) && (stock[5].case_value == player.player_symb) && (stock[7].case_value == player.player_symb)))
       puts "#{player.first_name} #{"wins".red} "
       return 1
-    elsif ((stock[1].case_value != ".".blue) && (stock[2].case_value != ".".blue ) && (stock[3].case_value != ".".blue ) &&
-          (stock[4].case_value != ".".blue ) && (stock[5].case_value != ".".blue ) && (stock[6].case_value != ".".blue ) &&
-          (stock[7].case_value != ".".blue ) && (stock[8].case_value != ".".blue ) && (stock[9].case_value != ".".blue ))
+    elsif ((stock[1].case_value != " ") && (stock[2].case_value != " " ) && (stock[3].case_value != " " ) &&
+          (stock[4].case_value != " " ) && (stock[5].case_value != " " ) && (stock[6].case_value != " " ) &&
+          (stock[7].case_value != " " ) && (stock[8].case_value != " " ) && (stock[9].case_value != " " ))
       puts "Match Null".red
       return 1
     else
@@ -134,9 +132,9 @@ class Game
   end
 
   def play_again
-    puts "Would you like to play an other party? (Y = oui, n = non)"
+    puts "Would you like to play an other party? (Y/y = oui, N/n = non)" .green
     input = gets.chomp
-    if input == "Y"
+    if input == "Y" || input == "y"
       Game.new
     else
       exit
